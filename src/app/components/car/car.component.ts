@@ -12,7 +12,10 @@ export class CarComponent implements OnInit {
   cars: CarDetail[] = [];
   currentCar: CarDetail;
   dataLoaded = false;
-  
+  brandFilterText="";
+  colorFilterText="";
+  carFilterText="";
+
 
   constructor(
     private carService: CarService,

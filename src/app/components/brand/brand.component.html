@@ -6,21 +6,6 @@
   >
     <h5>Tum Markalar</h5>
   </li>
-  <li>
-    <div>
-      <label for="brandFilterText" class="list-group-item"><h6>Marka Ara</h6></label>
-      <input
-        type="text"
-        [(ngModel)]="brandFilterText"
-        class="form-control"
-        id="brandFilterText"
-        placeholder="Arama istediginiz rengi girin"
-      />
-      <div *ngIf="brandFilterText" class="alert alert-success">
-        {{ brandFilterText }} aradiniz.
-      </div>
-    </div>
-  </li>
   <li
     (click)="setCurrentBrand(brand)"
     routerLink="/cars/brand/{{ brand.brandId }}"

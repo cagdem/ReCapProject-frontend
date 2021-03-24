@@ -1,25 +1,75 @@
-<div *ngIf="dataLoaded==false" class="spinner-border text-primary" role="status">
-    <span class="visually-hidden">Loading...</span>
+<div
+  *ngIf="dataLoaded == false"
+  class="spinner-border text-primary"
+  role="status"
+>
+  <span class="visually-hidden">Loading...</span>
+</div>
+  <div class="row">
+    <div class="col-md-4">
+      <label for="brandFilterText" class="list-group-item"
+        ><h6>Marka Ara</h6></label
+      >
+      <input
+        type="text"
+        [(ngModel)]="brandFilterText"
+        class="form-control"
+        id="brandFilterText"
+        placeholder="Arama istediginiz markayi girin"
+      />
+      <div *ngIf="brandFilterText" class="alert alert-success">
+        {{ brandFilterText }} aradiniz.
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="colorFilterText" class="list-group-item"
+        ><h6>Renk Ara</h6></label
+      >
+      <input
+        type="text"
+        [(ngModel)]="colorFilterText"
+        class="form-control"
+        id="colorFilterText"
+        placeholder="Arama istediginiz rengi girin"
+      />
+      <div *ngIf="colorFilterText" class="alert alert-success">
+        {{ colorFilterText }} aradiniz.
+      </div>
+    </div>
+    <div class="col-md-4">
+      <label for="carFilterText" class="list-group-item"
+        ><h6>Araba Ara</h6></label
+      >
+      <input
+        type="text"
+        [(ngModel)]="carFilterText"
+        class="form-control"
+        id="carFilterText"
+        placeholder="Arama istediginiz arabayi girin"
+      />
+      <div *ngIf="carFilterText" class="alert alert-success">
+        {{ carFilterText }} aradiniz.
+      </div>
+    </div>
   </div>
-  <table *ngIf="dataLoaded!=false"class="table">
-    <thead>
-      <tr>
-        <th>Arabanin Adi</th>
-        <th>Marka Adi</th>
-        <th>Renk</th>
-        <th>Fiyat</th>
-
-      </tr>
-    </thead>
-    <tr
-    (click)="getCurrentCar(car)"
-    routerLink="/cars/{{car.carId}}"
-    *ngFor="let car of cars"
-    class="list-group-item-action">
-      <td>{{ car.carName }}</td>
-      <td>{{ car.brandName }}</td>
-      <td>{{ car.colorName }}</td>
-      <td>{{ car.dailyPrice }}</td>
-
+<table *ngIf="dataLoaded != false" class="table">
+  <thead>
+    <tr>
+      <th>Arabanin Adi</th>
+      <th>Marka Adi</th>
+      <th>Renk</th>
+      <th>Fiyat</th>
     </tr>
-  </table>
+  </thead>
+  <tr
+    (click)="getCurrentCar(car)"
+    routerLink="/cars/{{ car.carId }}"
+    *ngFor="let car of cars | brandFilter: brandFilterText | colorFilter: colorFilterText | carFilter: carFilterText"
+    class="list-group-item-action"
+  >
+    <td>{{ car.carName }}</td>
+    <td>{{ car.brandName }}</td>
+    <td>{{ car.colorName }}</td>
+    <td>{{ car.dailyPrice }}</td>
+  </tr>
+</table>
