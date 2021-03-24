@@ -1,0 +1,30 @@
+import { Component, OnInit } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
+import { Color } from 'src/app/models/color';
+import { ColorService } from 'src/app/services/color.service';
+
+@Component({
+  selector: 'app-color-list',
+  templateUrl: './color-list.component.html',
+  styleUrls: ['./color-list.component.css']
+})
+export class ColorListComponent implements OnInit {
+
+  colorList:Color[]=[];
+  currentColor:Color;
+  constructor(private colorService:ColorService, private toastrService:ToastrService) { }
+
+  ngOnInit(): void {
+    this.getColors();
+  }
+
+  getColors(){
+    this.colorService.getColors().subscribe(response=>{
+      this.colorList=response.data;
+    })
+  }
+  setCurrentColor(color:Color){
+    this.currentColor = color;
+    this.toastrService.success(color.colorName,"Filtrelendi.")
+  }
+}

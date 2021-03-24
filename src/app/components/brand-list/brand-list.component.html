@@ -1,0 +1,22 @@
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    href="#"
+    id="navbarDropdown"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="false"
+  >
+    Markalar
+  </a>
+  <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+    <li *ngFor="let brand of brandList">
+        <a class="dropdown-item">
+          {{ brand.brandName}}
+          <span (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}" class="badge bg-primary">
+            Filtrele
+          </span>
+          </a>
+      </li> 
+ </ul>
+</li>

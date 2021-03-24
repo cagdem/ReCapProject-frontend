@@ -20,6 +20,8 @@ import { ColorFilterPipe } from './pipes/color-filter.pipe';
 import { CarFilterPipe } from './pipes/car-filter.pipe';
 
 import {ToastrModule} from "ngx-toastr";
+import { BrandListComponent } from './components/brand-list/brand-list.component';
+import { ColorListComponent } from './components/color-list/color-list.component';
 
 
 @NgModule({
@@ -35,13 +37,17 @@ import {ToastrModule} from "ngx-toastr";
     CarDetailComponent,
     BrandFilterPipe,
     ColorFilterPipe,
-    CarFilterPipe
+    CarFilterPipe,
+    BrandListComponent,
+    ColorListComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({positionClass:"toast-bottom-right"})
   ],
   providers: [],
   bootstrap: [AppComponent]
