@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
@@ -19,6 +19,9 @@ import { BrandFilterPipe } from './pipes/brand-filter.pipe';
 import { ColorFilterPipe } from './pipes/color-filter.pipe';
 import { CarFilterPipe } from './pipes/car-filter.pipe';
 
+import {MatNativeDateModule} from '@angular/material/core';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ToastrModule} from "ngx-toastr";
 import { BrandListComponent } from './components/brand-list/brand-list.component';
 import { ColorListComponent } from './components/color-list/color-list.component';
@@ -39,7 +42,7 @@ import { ColorListComponent } from './components/color-list/color-list.component
     ColorFilterPipe,
     CarFilterPipe,
     BrandListComponent,
-    ColorListComponent
+    ColorListComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,6 +50,12 @@ import { ColorListComponent } from './components/color-list/color-list.component
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
+    
+    ReactiveFormsModule,
+    MatNativeDateModule,
+    MatFormFieldModule,
+    MatDatepickerModule,
+
     ToastrModule.forRoot({positionClass:"toast-bottom-right"})
   ],
   providers: [],

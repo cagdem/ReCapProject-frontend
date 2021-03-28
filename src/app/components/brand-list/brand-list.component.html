@@ -13,7 +13,7 @@
     <li *ngFor="let brand of brandList">
         <a class="dropdown-item">
           {{ brand.brandName}}
-          <span (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}" class="badge bg-primary">
+          <span (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}" class="badge bg-primary position-absolute end-0">
             Filtrele
           </span>
           </a>

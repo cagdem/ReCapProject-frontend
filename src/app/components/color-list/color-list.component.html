@@ -10,12 +10,12 @@
   </a>
   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
     <li *ngFor="let color of colorList">
-        <a class="dropdown-item">
+        <div class="dropdown-item">
           {{ color.colorName}}
-          <span (click)="setCurrentColor(color)" routerLink="/cars/color/{{color.colorId}}" class="badge bg-primary">
+          <span (click)="setCurrentColor(color)" routerLink="/cars/color/{{color.colorId}}" class="badge bg-primary position-absolute end-0">
             Filtrele
           </span>
-          </a>
+        </div>
       </li>
     <!-- <li><hr class="dropdown-divider" /></li> -->
   </ul>
