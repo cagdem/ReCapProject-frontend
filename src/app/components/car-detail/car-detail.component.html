@@ -21,6 +21,7 @@
         <div class="row">
           <div class="col">
             <label for="selectToastPlacement" >
+              <p>{{minDate}}</p>
               <p> Kiralamak istediginiz tarih araligini seciniz.  Bu arac su tarihler arasi kiraliktir:</p>
               <p       *ngFor="let carRentalDetail of carRentalDetails"
               > {{carRentalDetail.rentDate | date}} - {{carRentalDetail.returnDate | date}} </p></label
@@ -29,7 +30,7 @@
           <div class="col">
             <mat-form-field appearance="legacy">
               <mat-label>Enter a date range</mat-label>
-              <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+              <mat-date-range-input [min]="minDate" [formGroup]="range" [rangePicker]="picker">
                 <input
                   matStartDate
                   formControlName="start"
@@ -66,7 +67,8 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" (click)="addRental()" class="btn btn-primary">Kirala</button>
+        <button 
+        type="button" (click)="addRental()" class="btn btn-primary" data-bs-dismiss="modal">Kirala</button>
       </div>
     </div>
   </div>

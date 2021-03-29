@@ -1,6 +1,12 @@
-import { APP_BOOTSTRAP_LISTENER, Component, OnInit } from '@angular/core';
+import {
+  APP_BOOTSTRAP_LISTENER,
+  Component,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 import { CarDetail } from 'src/app/models/carDetail';
 import { CarImage } from 'src/app/models/carImage';
 import { Rental } from 'src/app/models/rental';
@@ -17,18 +23,24 @@ import { RentalService } from 'src/app/services/rental.service';
 export class CarDetailComponent implements OnInit {
   fakeRental: Rental;
   car: CarDetail;
-  carRentalDetails:RentalDetail[];
+  carRentalDetails: RentalDetail[];
+  tempArray: RentalDetail[];
   carCount: number[];
   carImages: CarImage[];
   emptyImages: CarImage = { id: 0, carId: 0, date: 0, imagePath: '' };
   range: any;
+  minDate: Date;
 
   constructor(
+    private toastrService:ToastrService,
     private carService: CarService,
     private carDetailService: CarDetailService,
     private activatedRoute: ActivatedRoute,
-    private rentalService: RentalService
-  ) {}
+    private rentalService: RentalService,
+    private router: Router
+  ) {
+    this.minDate = new Date();
+  }
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
@@ -77,30 +89,56 @@ export class CarDetailComponent implements OnInit {
 
   getRentalDetailsByCarId(carId: number) {
     this.rentalService.getRentalDetailsByCarId(carId).subscribe((response) => {
-      this.carRentalDetails = response.data;
-console.log(this.range.value.start._d)
-console.log(this.range.value.start)
-console.log(this.range.value.start._d.getTime())
-console.log(this.range.value.end._d.getTime())
+      let temp = response.data;
 
+      this.carRentalDetails = temp;
+      console.log(typeof this.carRentalDetails[0].returnDate);
+      temp.forEach((t) => {
+        console.log(t)
+        t.rentDate = new Date(t.rentDate);
 
-
-
-
-
-
-
-      this.carRentalDetails.forEach(carRentalDetail => {
-         
-        console.log(carRentalDetail.rentDate.valueOf())
-        console.log(carRentalDetail.rentDate)
-        
+        if (t.returnDate != null) {
+          t.returnDate = new Date(t.returnDate);
+        }
       });
-    });  
+      console.log(typeof this.carRentalDetails[0].returnDate);
+      //console.log(this.carRentalDetails[1].returnDate);
+    });
   }
 
-  addRental(){
-    this.fakeRental={carId: this.car.carId,customerId: 100,rentDate:this.range.value.start._d,returnDate:this.range.value.end._d}
-    this.rentalService.addRental(this.fakeRental);
+  addRental() {
+      if(this.checkIfAvailable()){
+        this.toastrService.success("Odeme sayfasina yonlendiriliyorsunuz","Basarili")
+      this.fakeRental = {
+        carId: this.car.carId,
+        customerId: 3,
+        rentDate: this.range.value.start._d,
+        returnDate: this.range.value.end._d,
+      };
+      this.router.navigate(['payment/', JSON.stringify(this.fakeRental)]);
+    }else{
+      this.toastrService.error("Sectiginiz tarih araliginda araba baska bir musteridedir.","Hata")
+    }
+  }
+
+  checkIfAvailable(): Boolean | void {
+    if(this.carRentalDetails!=undefined){
+      for (const element of this.carRentalDetails) {
+        if (element.returnDate == null) {
+        return false;
+      }
+      if (element.returnDate> this.minDate) {
+        if (this.range.value.start._d.getTime()<=element.returnDate.getTime() && 
+        this.range.value.start._d.getTime()>=element.rentDate.getTime()) {
+          return false
+        }
+        if (this.range.value.end._d.getTime()<=element.returnDate.getTime() && 
+        this.range.value.end._d.getTime()>=element.rentDate.getTime()) {
+          return false
+        }  
+      }
+      }
+  }
+    return true;
   }
 }
