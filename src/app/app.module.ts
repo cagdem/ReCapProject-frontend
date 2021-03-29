@@ -19,6 +19,8 @@ import { BrandFilterPipe } from './pipes/brand-filter.pipe';
 import { ColorFilterPipe } from './pipes/color-filter.pipe';
 import { CarFilterPipe } from './pipes/car-filter.pipe';
 
+import { MAT_DATE_LOCALE } from "@angular/material/core";
+import {MatMomentDateModule} from '@angular/material-moment-adapter';
 import {MatNativeDateModule} from '@angular/material/core';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -55,10 +57,15 @@ import { ColorListComponent } from './components/color-list/color-list.component
     MatNativeDateModule,
     MatFormFieldModule,
     MatDatepickerModule,
+    MatMomentDateModule,
 
     ToastrModule.forRoot({positionClass:"toast-bottom-right"})
   ],
-  providers: [],
+  providers: [
+    {
+      provide : MAT_DATE_LOCALE, useValue: 'tr-TR'
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

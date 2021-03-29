@@ -8,7 +8,6 @@
 >
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      
       <div class="modal-header">
         <h3 class="modal-title" id="rentModalLabel">Arac Kiralama</h3>
         <button
@@ -18,42 +17,48 @@
           aria-label="Close"
         ></button>
       </div>
-
       <div>
         <div class="row">
           <div class="col">
+            <label for="selectToastPlacement" >
+              <p> Kiralamak istediginiz tarih araligini seciniz.  Bu arac su tarihler arasi kiraliktir:</p>
+              <p       *ngFor="let carRentalDetail of carRentalDetails"
+              > {{carRentalDetail.rentDate | date}} - {{carRentalDetail.returnDate | date}} </p></label
+              >
+          </div>
+          <div class="col">
+            <mat-form-field appearance="legacy">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
+                <input
+                  matStartDate
+                  formControlName="start"
+                  placeholder="Start date"
+                />
+                <input
+                  matEndDate
+                  formControlName="end"
+                  placeholder="End date"
+                />
+              </mat-date-range-input>
+              <mat-datepicker-toggle
+                matSuffix
+                [for]="picker"
+              ></mat-datepicker-toggle>
+              <mat-date-range-picker #picker></mat-date-range-picker>
 
-          <label for="selectToastPlacement">Kiralamak istediginiz tarih araligini seciniz.</label>
-        </div>
-        <div class="col">
+              <mat-error
+                *ngIf="range.controls.start.hasError('matStartDateInvalid')"
+                >Invalid start date</mat-error
+              >
+              <mat-error
+                *ngIf="range.controls.end.hasError('matEndDateInvalid')"
+                >Invalid end date</mat-error
+              >
+            </mat-form-field>
 
-          <mat-form-field appearance="legacy">
-            <mat-label>Enter a date range</mat-label>
-            <mat-date-range-input [formGroup]="range" [rangePicker]="picker">
-              <input
-                matStartDate
-                formControlName="start"
-                placeholder="Start date"
-              />
-              <input matEndDate formControlName="end" placeholder="End date" />
-            </mat-date-range-input>
-            <mat-datepicker-toggle
-              matSuffix
-              [for]="picker"
-            ></mat-datepicker-toggle>
-            <mat-date-range-picker #picker></mat-date-range-picker>
-
-            <mat-error
-              *ngIf="range.controls.start.hasError('matStartDateInvalid')"
-              >Invalid start date</mat-error
-            >
-            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')"
-              >Invalid end date</mat-error
-            >
-          </mat-form-field>
-
-          <p>Selected range: {{ range.value | json }}</p>
-        </div>
+            <p>Selected range: {{ range.value | json }}</p>
+          </div>
         </div>
       </div>
 
@@ -61,7 +66,7 @@
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
           Close
         </button>
-        <button type="button" class="btn btn-primary">Kirala</button>
+        <button type="button" (click)="addRental()" class="btn btn-primary">Kirala</button>
       </div>
     </div>
   </div>
@@ -119,7 +124,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let car of cars">
+      <tr>
         <th>Marka: {{ car.brandName }}</th>
         <td>Model: {{ car.carName }}</td>
         <td>Fiyat: {{ car.dailyPrice }}</td>
@@ -130,6 +135,7 @@
   <div class="position-relative">
     <button
       type="button"
+      (click)="getRentalDetailsByCarId(car.carId)"
       class="btn btn-primary position-absolute top-0 end-0"
       data-bs-toggle="modal"
       data-bs-target="#rentModal"
@@ -137,5 +143,4 @@
       Kirala
     </button>
   </div>
-
 </div>

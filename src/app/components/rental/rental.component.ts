@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Rental } from 'src/app/models/rental';
 import { RentalDetail } from 'src/app/models/rentalDetail';
 import { RentalService } from 'src/app/services/rental.service';
 
@@ -22,4 +23,5 @@ export class RentalComponent implements OnInit {
       this.dataLoaded=true;
     })
   }
+
 }
