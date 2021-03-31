@@ -27,7 +27,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {ToastrModule} from "ngx-toastr";
 import { BrandListComponent } from './components/brand-list/brand-list.component';
 import { ColorListComponent } from './components/color-list/color-list.component';
-import { PaymentComponent } from './payment/payment.component';
+import { PaymentComponent } from './components/payment/payment.component';
 
 
 @NgModule({
