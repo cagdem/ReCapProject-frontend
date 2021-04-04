@@ -31,8 +31,16 @@ export class CarService {
     let newPath = this.apiUrl + "/products/getcardetails?carId="+carId;
     return this.httpClient.get<NonlistResponseModel<CarDetail>>(newPath);
   }
+  getCarById(carId:number):Observable<NonlistResponseModel<Car>>{
+    let newPath = this.apiUrl + "/products/getbyid?id="+carId;
+    return this.httpClient.get<NonlistResponseModel<Car>>(newPath);
+  }
   addCar(car:Car):Observable<ResponseModel>{
     let newPath = this.apiUrl + "/products/add";
+    return this.httpClient.post<ResponseModel>(newPath,car);
+  }
+  updateCar(car:Car):Observable<ResponseModel>{
+    let newPath = this.apiUrl + "/products/update";
     return this.httpClient.post<ResponseModel>(newPath,car);
   }
 }

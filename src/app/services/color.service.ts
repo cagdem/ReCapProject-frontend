@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Color } from '../models/color';
 import { ListResponseModel } from '../models/listResponseModel';
+import { NonlistResponseModel } from '../models/nonlistResponseModel';
 import { ResponseModel } from '../models/responseModel';
 
 @Injectable({
@@ -17,8 +18,16 @@ export class ColorService {
     let newPath= this.apiUrl+"/getall";
     return this.httpClient.get<ListResponseModel<Color>>(newPath);
   }
+  getColorById(colorId:number):Observable<NonlistResponseModel<Color>>{
+    let newPath = this.apiUrl + "/getbyId?Id="+colorId;
+    return this.httpClient.get<NonlistResponseModel<Color>>(newPath)
+  }
   addColor(color:Color):Observable<ResponseModel>{
     let newPath= this.apiUrl+"/add";
+    return this.httpClient.post<ResponseModel>(newPath,color)
+  }
+  updateColor(color:Color):Observable<ResponseModel>{
+    let newPath = this.apiUrl + "/update";
     return this.httpClient.post<ResponseModel>(newPath,color)
   }
 }

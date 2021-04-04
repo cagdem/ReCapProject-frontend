@@ -59,6 +59,7 @@
       <th>Marka Adi</th>
       <th>Renk</th>
       <th>Fiyat</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -77,6 +78,10 @@
       <td>{{ car.brandName }}</td>
       <td>{{ car.colorName }}</td>
       <td>{{ car.dailyPrice }}</td>
+      <td>
+      <span routerLink="/cars/update/{{car.carId}}" class="badge bg-success">
+        Düzenle
+      </span></td>
     </tr>
   </tbody>
 </table>
