@@ -1,13 +1,14 @@
+<body class="text">
 <div class="container">
   <main>
     <div class="row">
       <div class="col">
         <form class="needs-validation" novalidate>
-          <h2 class="mb-3">Payment</h2>
+          <h1 class="mb-3">Odeme</h1>
 
-          <div [formGroup]="form"  class="row gy-3">
+          <div [formGroup]="paymentForm"  class="row gy-3">
             <div class="col-md-6">
-              <label for="cc-name" class="form-label">Name on card</label>
+              <label for="cc-name" class="form-label">Kartin sahibi</label>
               <input
                 type="text"
                 formControlName="name"
@@ -16,13 +17,13 @@
                 placeholder=""
                 required
               />
-              <small class="text-muted">Full name as displayed on card</small>
-              <div class="invalid-feedback">Name on card is required</div>
+              <small class="text-muted">Kartta yazili olan isim</small>
+              <div class="invalid-feedback">Isim zorunludur.</div>
             </div>
 
             <div class="col-md-6">
               <label for="cc-number" class="form-label"
-                >Credit card number</label
+                >Kredi karti numarasi</label
               >
               <input
                 type="text"
@@ -32,11 +33,11 @@
                 placeholder=""
                 required
               />
-              <div class="invalid-feedback">Credit card number is required</div>
+              <div class="invalid-feedback">Kredi karti numarasi zorunludur.</div>
             </div>
 
             <div class="col-md-3">
-              <label for="cc-expiration" class="form-label">Expiration</label>
+              <label for="cc-expiration" class="form-label">Gecerlilik tarihi</label>
               <input
                 type="text"
                 formControlName="exp"
@@ -45,7 +46,7 @@
                 placeholder=""
                 required
               />
-              <div class="invalid-feedback">Expiration date required</div>
+              <div class="invalid-feedback">Gecerlilik tarihi zorunludur.</div>
             </div>
 
             <div class="col-md-3">
@@ -58,17 +59,18 @@
                 placeholder=""
                 required
               />
-              <div class="invalid-feedback">Security code required</div>
+              <div class="invalid-feedback">Guvenlik kodu zorunludur.</div>
             </div>
           </div>
 
           <hr class="my-4" />
 
           <button (click)="getPaymentDetails()" class="w-100 btn btn-primary btn-lg" type="submit">
-            Continue to checkout
+            Odeme yap
           </button>
         </form>
       </div>
     </div>
   </main>
 </div>
+</body>

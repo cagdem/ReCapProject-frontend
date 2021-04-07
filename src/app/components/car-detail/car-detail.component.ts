@@ -13,6 +13,8 @@ import { Rental } from 'src/app/models/rental';
 import { RentalDetail } from 'src/app/models/rentalDetail';
 import { CarDetailService } from 'src/app/services/car-detail.service';
 import { CarService } from 'src/app/services/car.service';
+import { FindeksService } from 'src/app/services/findeks.service';
+import { LocalstorageService } from 'src/app/services/localstorage.service';
 import { RentalService } from 'src/app/services/rental.service';
 
 @Component({
@@ -37,7 +39,9 @@ export class CarDetailComponent implements OnInit {
     private carDetailService: CarDetailService,
     private activatedRoute: ActivatedRoute,
     private rentalService: RentalService,
-    private router: Router
+    private router: Router,
+    private findeksService: FindeksService,
+    private localStorageService:LocalstorageService
   ) {
     this.minDate = new Date();
   }
@@ -92,7 +96,7 @@ export class CarDetailComponent implements OnInit {
       let temp = response.data;
 
       this.carRentalDetails = temp;
-      console.log(typeof this.carRentalDetails[0].returnDate);
+      //console.log(typeof this.carRentalDetails[0].returnDate);
       temp.forEach((t) => {
         console.log(t)
         t.rentDate = new Date(t.rentDate);
@@ -101,14 +105,28 @@ export class CarDetailComponent implements OnInit {
           t.returnDate = new Date(t.returnDate);
         }
       });
-      console.log(typeof this.carRentalDetails[0].returnDate);
+      //console.log(typeof this.carRentalDetails[0].returnDate);
       //console.log(this.carRentalDetails[1].returnDate);
     });
   }
 
-  addRental() {
-      if(this.checkIfAvailable()){
+  rent(){
+    if(this.checkIfAvailable()){    
+      let userEmail = this.localStorageService.get('userEmail')
+      if (userEmail!=null) {
+      this.findeksService.check(userEmail,this.car.carId).subscribe(response=>{
+        this.toastrService.success(response.message, 'Basarili');
         this.toastrService.success("Odeme sayfasina yonlendiriliyorsunuz","Basarili")
+        this.addRental();        
+      },responseError=>{
+        this.toastrService.error("Findeks puaniniz yetersiz.","Hata")
+        console.log(responseError)
+      })  
+      }
+    }
+  }
+
+  addRental() {
       this.fakeRental = {
         carId: this.car.carId,
         customerId: 3,
@@ -116,9 +134,6 @@ export class CarDetailComponent implements OnInit {
         returnDate: this.range.value.end._d,
       };
       this.router.navigate(['payment/', JSON.stringify(this.fakeRental)]);
-    }else{
-      this.toastrService.error("Sectiginiz tarih araliginda araba baska bir musteridedir.","Hata")
-    }
   }
 
   checkIfAvailable(): Boolean | void {

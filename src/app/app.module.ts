@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
@@ -34,6 +34,9 @@ import { CarAddComponent } from './components/car-add/car-add.component';
 import { BrandEditComponent } from './components/brand-edit/brand-edit.component';
 import { ColorEditComponent } from './components/color-edit/color-edit.component';
 import { CarEditComponent } from './components/car-edit/car-edit.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { RegisterComponent } from './components/register/register.component';
 
 
 @NgModule({
@@ -59,6 +62,8 @@ import { CarEditComponent } from './components/car-edit/car-edit.component';
     BrandEditComponent,
     ColorEditComponent,
     CarEditComponent,
+    LoginComponent,
+    RegisterComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +84,9 @@ import { CarEditComponent } from './components/car-edit/car-edit.component';
   providers: [
     {
       provide : MAT_DATE_LOCALE, useValue: 'tr-TR'
+    },
+    {
+      provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true
     }
   ],
   bootstrap: [AppComponent]

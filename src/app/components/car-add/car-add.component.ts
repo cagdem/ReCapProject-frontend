@@ -60,9 +60,14 @@ export class CarAddComponent implements OnInit {
       this.carService.addCar(carModel).subscribe((response)=>{
         this.toastrService.success(response.message, 'Basarili');
       },(responseError) =>{
-        if (responseError.error.Errors.length>0) {
-          for (let i = 0; i < responseError.error.Errors.length; i++) {
-            this.toastrService.error(responseError.error.Errors[i].ErrorMessage, 'Dogrulama hatasi');
+        if (!responseError.error.success) {
+          console.log(responseError)
+          this.toastrService.error(
+            responseError.error.message, 'Kural hatasi'
+          )
+        }else if (responseError.error.errors.length>0) {
+          for (let i = 0; i < responseError.error.errors.length; i++) {
+            this.toastrService.error(responseError.error.errors[i].ErrorMessage, 'Dogrulama hatasi');
           }
         }
       }

@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CarDetailComponent } from '../car-detail/car-detail.component';
 import { Rental } from '../../models/rental';
 import { Payment } from 'src/app/models/payment';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { PaymentService } from 'src/app/services/payment.service';
 import { RentalService } from 'src/app/services/rental.service';
@@ -15,14 +15,15 @@ import { RentalService } from 'src/app/services/rental.service';
 
 })
 export class PaymentComponent implements OnInit {
-  form:any;
+  paymentForm:FormGroup;
   payment:Payment;
   rental:Rental;
   constructor(
     private toastrService:ToastrService,
     private activatedRoute: ActivatedRoute,
     private paymentService: PaymentService,
-    private rentalService:RentalService
+    private rentalService:RentalService,
+    private formBuilder:FormBuilder
   ) {}
 
   ngOnInit(): void {
@@ -30,44 +31,30 @@ export class PaymentComponent implements OnInit {
       this.rental = JSON.parse(params['rental']);
     })
     console.log(this.rental);
-    this.form = new FormGroup({
-      name: new FormControl(),
-      cardNumber: new FormControl(),
-      exp: new FormControl(),
-      cvv: new FormControl(),
-
-    });
+    this.createPaymentForm();
   }
 
+  createPaymentForm(){
+    this.paymentForm=this.formBuilder.group({
+      name:['',Validators.required],
+      cardNumber:['',Validators.required],
+      exp:['',Validators.required],
+      cvv:['',Validators.required],
+    })
+    console.log(this.paymentForm)
+  }
   getPaymentDetails(){
-    
-    console.log(this.form)
-    if (this.form.value.name == null ||this.form.value.cvv == null ||this.form.value.exp == null ||this.form.value.cardNumber == null ) {
-      this.toastrService.error("Lutfen bilgileri eksiksiz giriniz","Hata")
-    }else{
-      console.log(this.form.value.cardNumber)
-      let card:Payment ={
-        cardNumber:this.form.value.cardNumber,
-        name:this.form.value.name,
-        cvv:this.form.value.cvv,
-        exp:this.form.value.exp,
-      }
-
-      console.log(card.cardNumber)
-
-      // this.payment.cardNumber=this.form.value.cardNumber;
-      // this.payment.name=this.form.value.name;
-      // this.payment.cvv=this.form.value.cvv;
-      // this.payment.exp=this.form.value.exp;
-      this.paymentService.check(card).subscribe((response)=>{
-        console.log(response)
-        if (response.success) {
+    if (this.paymentForm.valid) {
+      let paymentModel = Object.assign({},this.paymentForm.value);
+      this.paymentService.check(paymentModel).subscribe((response)=>{
           this.toastrService.success("Kiralama isleminiz tamamlaniyor.","Odeme onaylandi")
           this.rentalService.addRental(this.rental)
-        }else{
+        },responseError=>{
           this.toastrService.error("Odeme onaylanmadi, lutfen bilgilerinizi kontrol ediniz.","Hata")
         }
-      })
+      ) 
+    }else{
+      this.toastrService.error('Formunuz eksik.','Dikkat')
     }
-  }
+    }
 }
