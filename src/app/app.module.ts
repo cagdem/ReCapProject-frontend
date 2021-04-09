@@ -38,6 +38,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RegisterComponent } from './components/register/register.component';
 import { UserInfoComponent } from './components/user-info/user-info.component';
+import { UserEditComponent } from './components/user-edit/user-edit.component';
 
 
 @NgModule({
@@ -66,6 +67,7 @@ import { UserInfoComponent } from './components/user-info/user-info.component';
     LoginComponent,
     RegisterComponent,
     UserInfoComponent,
+    UserEditComponent,
     
   ],
   imports: [

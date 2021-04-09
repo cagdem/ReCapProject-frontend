@@ -4,11 +4,11 @@
         {{currentUser.firstName}} {{currentUser.lastName}} 
     </button>
     <ul class="dropdown-menu">
-      <li><a class="dropdown-item" href="#">{{currentUser.firstName}} {{currentUser.lastName}}</a></li>
-      <li><a class="dropdown-item" href="#">{{currentUser.email}}</a></li>
+      <li><a class="dropdown-item" >{{currentUser.firstName}} {{currentUser.lastName}}</a></li>
+      <li><a class="dropdown-item" >{{currentUser.email}}</a></li>
       <li><hr class="dropdown-divider"></li>
       <div class="d-flex">
-      <li><button class="btn btn-primary" href="#">Duzenle</button></li></div>
+      <li><button class="btn btn-primary" routerLink="/user/edit/" >Duzenle</button></li></div>
     </ul>
   </div>
 </div>

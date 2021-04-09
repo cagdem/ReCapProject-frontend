@@ -4,26 +4,25 @@ import { Observable } from 'rxjs';
 import { ListResponseModel } from '../models/listResponseModel';
 import { Rental } from '../models/rental';
 import { RentalDetail } from '../models/rentalDetail';
-import { ResponseModel } from '../models/responseModel';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RentalService {
 
-  apiUrl='https://localhost:44320/api/';
+  apiUrl='https://localhost:44320/api/rentals';
   constructor(private httpClient: HttpClient) { }
 
   getRentalDetails():Observable<ListResponseModel<RentalDetail>>{
-    let newPath = this.apiUrl + "rentals/getrentaldetails";
+    let newPath = this.apiUrl + "/getrentaldetails";
     return this.httpClient.get<ListResponseModel<RentalDetail>>(newPath);
   }
   getRentalDetailsByCarId(carId:number):Observable<ListResponseModel<RentalDetail>>{
-    let newPath = this.apiUrl + "rentals/getrentaldetailsbycarid?carId="+carId;
+    let newPath = this.apiUrl + "/getrentaldetailsbycarid?carId="+carId;
     return this.httpClient.get<ListResponseModel<RentalDetail>>(newPath);
   }
   addRental(rental:Rental){
-    let newPath = this.apiUrl + "rentals/add";
+    let newPath = this.apiUrl + "/add";
     return this.httpClient.post(newPath,rental).subscribe();
   }
 }

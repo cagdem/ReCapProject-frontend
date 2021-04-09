@@ -4,6 +4,7 @@ import { LoginModel } from '../models/loginModel';
 import { NonlistResponseModel } from '../models/nonlistResponseModel';
 import { RegisterModel } from '../models/registerModel';
 import { TokenModel } from '../models/tokenModel';
+import { User } from '../models/user';
 import { LocalstorageService } from './localstorage.service';
 
 @Injectable({
@@ -21,9 +22,9 @@ export class AuthService {
     return this.httpClient.post<NonlistResponseModel<TokenModel>>(this.apiUrl+"/register",user)
   }
   get(userEmail:string){
-    return this.httpClient.get<NonlistResponseModel<RegisterModel>>(this.apiUrl+"/get?userEmail="+userEmail)
+    return this.httpClient.get<NonlistResponseModel<User>>(this.apiUrl+"/get?userEmail="+userEmail)
   }
-  update(user:RegisterModel){
+  update(user:User){
     return this.httpClient.post<NonlistResponseModel<TokenModel>>(this.apiUrl+"/update",user)
   }
 
@@ -34,9 +35,7 @@ export class AuthService {
     if(currentTime<exp){
       return true;
     }else{
-      this.localStorageService.delete('token')
-      this.localStorageService.delete('exp')
-      this.localStorageService.delete('userEmail')
+      this.localStorageService.clear()
       return false;
     }
   }

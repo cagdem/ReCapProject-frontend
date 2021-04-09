@@ -11,6 +11,8 @@ import { CarDetail } from 'src/app/models/carDetail';
 import { CarImage } from 'src/app/models/carImage';
 import { Rental } from 'src/app/models/rental';
 import { RentalDetail } from 'src/app/models/rentalDetail';
+import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { CarDetailService } from 'src/app/services/car-detail.service';
 import { CarService } from 'src/app/services/car.service';
 import { FindeksService } from 'src/app/services/findeks.service';
@@ -23,6 +25,8 @@ import { RentalService } from 'src/app/services/rental.service';
   styleUrls: ['./car-detail.component.css'],
 })
 export class CarDetailComponent implements OnInit {
+
+  currentUser:User;
   fakeRental: Rental;
   car: CarDetail;
   carRentalDetails: RentalDetail[];
@@ -34,6 +38,7 @@ export class CarDetailComponent implements OnInit {
   minDate: Date;
 
   constructor(
+    private authService:AuthService,
     private toastrService:ToastrService,
     private carService: CarService,
     private carDetailService: CarDetailService,
@@ -47,6 +52,7 @@ export class CarDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getCurrentUser();
     this.activatedRoute.params.subscribe((params) => {
       this.getCarDetailsById(params['carId']);
       this.getCarImages(params['carId']);
@@ -91,12 +97,11 @@ export class CarDetailComponent implements OnInit {
     }
   }
 
-  getRentalDetailsByCarId(carId: number) {
-    this.rentalService.getRentalDetailsByCarId(carId).subscribe((response) => {
+  getRentalDetailsByCarId() {
+    this.rentalService.getRentalDetailsByCarId(this.car.carId).subscribe((response) => {
       let temp = response.data;
 
       this.carRentalDetails = temp;
-      //console.log(typeof this.carRentalDetails[0].returnDate);
       temp.forEach((t) => {
         console.log(t)
         t.rentDate = new Date(t.rentDate);
@@ -123,13 +128,15 @@ export class CarDetailComponent implements OnInit {
         console.log(responseError)
       })  
       }
+    }else{
+      this.toastrService.error("Araba secilen tarihlerde uygun degildir. Lutfen baska tarih secin.","Hata")
     }
   }
 
   addRental() {
       this.fakeRental = {
         carId: this.car.carId,
-        customerId: 3,
+        customerId: this.currentUser.id,
         rentDate: this.range.value.start._d,
         returnDate: this.range.value.end._d,
       };
@@ -155,5 +162,12 @@ export class CarDetailComponent implements OnInit {
       }
   }
     return true;
+  }
+
+  getCurrentUser(){
+    let userEmail = this.localStorageService.get('userEmail')
+    this.authService.get(userEmail).subscribe(response=>{
+      this.currentUser=response.data
+    })
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { RegisterModel } from 'src/app/models/registerModel';
+import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalstorageService } from 'src/app/services/localstorage.service';
 
@@ -10,7 +10,7 @@ import { LocalstorageService } from 'src/app/services/localstorage.service';
 })
 export class UserInfoComponent implements OnInit {
 
-  currentUser:RegisterModel;
+  currentUser:User;
   constructor(private authService:AuthService,private localStorageService:LocalstorageService) { }
 
   ngOnInit(): void {
