@@ -37,6 +37,7 @@ import { CarEditComponent } from './components/car-edit/car-edit.component';
 import { LoginComponent } from './components/login/login.component';
 import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { RegisterComponent } from './components/register/register.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
 
 
 @NgModule({
@@ -64,6 +65,8 @@ import { RegisterComponent } from './components/register/register.component';
     CarEditComponent,
     LoginComponent,
     RegisterComponent,
+    UserInfoComponent,
+    
   ],
   imports: [
     BrowserModule,

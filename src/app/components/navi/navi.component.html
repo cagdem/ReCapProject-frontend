@@ -9,19 +9,19 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
             <app-brand-list></app-brand-list>
             <app-color-list></app-color-list>
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
           </li>
         </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <div *ngIf="!status" class="d-flex">
+          <button routerLink="/login" class="btn btn-primary">Giris</button>
+          <button routerLink="/register" class="btn btn-success">Kayit Ol</button>
+        </div>
+        <div *ngIf="status" class="d-flex">
+          <app-user-info></app-user-info>
+        </div>
       </div>
     </div>
   </nav>

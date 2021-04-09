@@ -31,7 +31,8 @@ const routes: Routes = [
   {path:"payment/:rental", component:PaymentComponent},
 
   {path:"login", component:LoginComponent},
-  {path:"register", component:RegisterComponent}
+  {path:"register", component:RegisterComponent},
+
 
 ];
 

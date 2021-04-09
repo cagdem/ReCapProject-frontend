@@ -20,6 +20,12 @@ export class AuthService {
   register(user:RegisterModel){
     return this.httpClient.post<NonlistResponseModel<TokenModel>>(this.apiUrl+"/register",user)
   }
+  get(userEmail:string){
+    return this.httpClient.get<NonlistResponseModel<RegisterModel>>(this.apiUrl+"/get?userEmail="+userEmail)
+  }
+  update(user:RegisterModel){
+    return this.httpClient.post<NonlistResponseModel<TokenModel>>(this.apiUrl+"/update",user)
+  }
 
   isAuthenticated(){
     var currentTime = new Date().getTime()
