@@ -1,6 +1,38 @@
+<div *ngIf="paymentForm.valid && !isPaymentFound">
+<div class="modal fade" id="saveModal" tabindex="-1" aria-labelledby="saveModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 class="modal-title" id="saveModalLabel">Kart bilgileri</h2>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Kart bilgileriniz kayit edilsin mi?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="savePaymentDetails()" data-bs-dismiss="modal">Kaydet</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hayir, tesekkurler</button>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
 <body class="text">
+  
 <div class="container">
   <main>
+    <div *ngIf="isPaymentFound && !status" class="card">
+      <div class="card-body">
+        <h1 class="card-title">Kayitli kartiniz mevcut</h1>
+        <p class="card-text">Kayitli kartinizi kullanmak ister misiniz?</p>
+        <a class="btn btn-primary" (click)="useSavedPayment()">Evet</a>
+        <a class="btn btn-secondary" (click)="enterNewPayment()">Hayir</a>
+
+      </div>
+    </div>
+
+    <div *ngIf="!isPaymentFound || status">
     <div class="row">
       <div class="col">
         <form class="needs-validation" novalidate>
@@ -65,12 +97,13 @@
 
           <hr class="my-4" />
 
-          <button (click)="getPaymentDetails()" class="w-100 btn btn-primary btn-lg" type="submit">
+          <button (click)="getPaymentDetails()" class="w-100 btn btn-primary btn-lg" type="submit" data-bs-toggle="modal" data-bs-target="#saveModal">
             Odeme yap
           </button>
         </form>
       </div>
     </div>
+  </div>
   </main>
 </div>
 </body>

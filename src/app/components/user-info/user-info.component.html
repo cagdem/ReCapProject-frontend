@@ -1,3 +1,4 @@
+<div *ngIf="currentUser">
 <div class="container-fluid">
  <div class="btn-group dropstart">
     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
@@ -6,9 +7,17 @@
     <ul class="dropdown-menu">
       <li><a class="dropdown-item" >{{currentUser.firstName}} {{currentUser.lastName}}</a></li>
       <li><a class="dropdown-item" >{{currentUser.email}}</a></li>
+      <!-- <li><a class="dropdown-item" >Kart Bilgileri</a></li>
+      <li><a class="dropdown-item" >{{payment.name}}</a></li>
+      <li><a class="dropdown-item" >{{payment.cardNumber}}</a></li>
+      <li><a class="dropdown-item" >{{payment.exp}}</a></li>
+      <li><a class="dropdown-item" >{{payment.cvv}}</a></li> -->
+
+
       <li><hr class="dropdown-divider"></li>
       <div class="d-flex">
       <li><button class="btn btn-primary" routerLink="/user/edit/" >Duzenle</button></li></div>
     </ul>
   </div>
+</div>
 </div>

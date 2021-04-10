@@ -100,7 +100,7 @@ export class CarDetailComponent implements OnInit {
   getRentalDetailsByCarId() {
     this.rentalService.getRentalDetailsByCarId(this.car.carId).subscribe((response) => {
       let temp = response.data;
-
+      console.log(response)
       this.carRentalDetails = temp;
       temp.forEach((t) => {
         console.log(t)
@@ -136,7 +136,7 @@ export class CarDetailComponent implements OnInit {
   addRental() {
       this.fakeRental = {
         carId: this.car.carId,
-        customerId: this.currentUser.id,
+        customerId: 3,//customer servis ile user servisin duzenlenmesi gerekiyor
         rentDate: this.range.value.start._d,
         returnDate: this.range.value.end._d,
       };
